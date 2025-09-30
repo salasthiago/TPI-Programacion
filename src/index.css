@@ -1,1 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+:root {
+  --morado-oscuro: #4a148c;
+  --morado-medio: #7b1fa2;
+  --morado-claro: #9c27b0;
+  --violeta: #ab47bc;
+  --lavanda: #e1bee7;
+  --blanco: #ffffff;
+  --gris-claro: #f5f5f5;
+  --texto-oscuro: #2d2d2d;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--gris-claro);
+  color: var(--texto-oscuro);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
