@@ -2,6 +2,7 @@ import ProductsLoop from "../components/ProductsLoop"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import "./Home.css"
+import { Link } from "react-router-dom"
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
       <div className="hero-section">
         <h1>Ponele Música a tu Vida</h1>
         <h2>Comprá tus Vinilos Favoritos en Purple Cat</h2>
-        <button className="hero-btn">Ver Catálogo</button>
+        <Link to="/catalogo"><button className="hero-btn">Ver Catálogo</button></Link>
       </div>
       <div className="section">
         <h2>Destacados del Mes</h2>

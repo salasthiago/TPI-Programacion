@@ -1,3 +1,5 @@
+import Product from "./Product"
+
 const ProductsLoop = () => {
   const products = [
     { id: 1, name: "Abbey Road", artist: "The Beatles", price: "$25.99" },
@@ -9,13 +11,7 @@ const ProductsLoop = () => {
   return (
     <div className="products-container">
       {products.map(product => (
-        <div key={product.id} className="product-card">
-          <div className="vinyl-icon">💿</div>
-          <h3>{product.name}</h3>
-          <p>{product.artist}</p>
-          <div className="product-price">{product.price}</div>
-          <button className="product-btn">Agregar al Carrito</button>
-        </div>
+        <Product key={product.id} id={product.id} name={product.name} artist={product.artist} price={product.price}></Product>
       ))}
     </div>
   )
