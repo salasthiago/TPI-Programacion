@@ -1,7 +1,9 @@
 import purplecat from "../assets/purplecat.jpeg"
 import { Link } from "react-router-dom"
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
+  const { totalItems } = useCart();
   return (
     <div className="header-section">
       <div className="header-content">
@@ -12,6 +14,7 @@ const Header = () => {
           <ul className="nav-menu">
             <li><Link to="/">Inicio</Link></li>
             <li><Link to="/contacto">Contacto</Link></li>
+            <li><Link to="/cart">🛒 {totalItems}</Link></li>
           </ul>
         </nav>
       </div>
