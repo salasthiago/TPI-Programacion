@@ -8,7 +8,7 @@ return (
     <div>
     <div className="products-container">       
       {products.map(product => (
-        <Product key={product.id} id={product.id} name={product.name} artist={product.artist} price={product.price}></Product>
+        <Product key={product.id} id={product.id} name={product.name} artist={product.artist} price={product.price} year={product.year}></Product>
       ))}
     </div>
     </div>
