@@ -1,0 +1,22 @@
+meta {
+  name: recibe_data
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/usuarios
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Thiago",
+    "correo": "thiago@example.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

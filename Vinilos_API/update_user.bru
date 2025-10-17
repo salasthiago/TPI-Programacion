@@ -1,0 +1,24 @@
+meta {
+  name: update_user
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/api/usuarios/ID_DEL_USUARIO
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "NuevoNombre",
+    "correo": "nuevo@email.com"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
