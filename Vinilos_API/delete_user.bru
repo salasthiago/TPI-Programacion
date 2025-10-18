@@ -1,13 +1,17 @@
 meta {
   name: delete_user
   type: http
-  seq: 3
+  seq: 5
 }
 
 delete {
   url: http://localhost:3000/api/usuarios/1
-  body: none
+  body: json
   auth: inherit
+}
+
+params:query {
+  : 
 }
 
 settings {

@@ -1,7 +1,7 @@
 meta {
   name: recibe_data
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
@@ -13,10 +13,11 @@ post {
 body:json {
   {
     "nombre": "Thiago",
-    "correo": "thiago@example.com"
+    "correo": "thiago@ejemplo.com"
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
