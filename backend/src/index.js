@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import sequelize from "./models/index.js";
+import sequelize from "./models/database.js";
 import usuarioRoutes from "./routes/usuario.routes.js";
 
 const app = express();
@@ -13,10 +13,14 @@ app.use("/api/usuarios", usuarioRoutes);
 
 (async () => {
   try {
+    await sequelize.authenticate();
+    console.log("✅ Conexión a SQLite exitosa");
+    
     await sequelize.sync({ alter: true });
-    console.log("Base de datos sincronizada correctamente");
-    app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));
+    console.log("✅ Base de datos sincronizada correctamente");
+    
+    app.listen(PORT, () => console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`));
   } catch (error) {
-    console.error("Error al iniciar el servidor:", error);
+    console.error("❌ Error al iniciar el servidor:", error);
   }
 })();

@@ -1,5 +1,6 @@
 // backend/src/routes/usuario.routes.js
 import express from 'express';
+import Usuario from '../models/usuario.model.js';
 import {
   obtenerUsuarios,
   crearUsuario,

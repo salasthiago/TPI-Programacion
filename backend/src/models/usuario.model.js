@@ -1,7 +1,12 @@
 import { DataTypes } from 'sequelize';
-import sequelize from './index.js';
+import sequelize from './database.js';
 
 const Usuario = sequelize.define('Usuario', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
   nombre: {
     type: DataTypes.STRING,
     allowNull: false
@@ -9,8 +14,18 @@ const Usuario = sequelize.define('Usuario', {
   correo: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
+}, {
+  tableName: 'usuarios',
+  timestamps: true
 });
 
 export default Usuario;
