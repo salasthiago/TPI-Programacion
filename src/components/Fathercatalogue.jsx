@@ -113,7 +113,13 @@ export default function Fathercatalogue() {
     <div>
       <Header></Header>
       <div className="father">
-        <Filtered filter={filter} setFilter={setFilter}></Filtered>
+      <div className="catalogue-hero">
+        <h1>Nuestro Catálogo</h1>
+        <p>Descubrí la mejor colección de vinilos. Desde clásicos atemporales hasta los lanzamientos más recientes.</p>
+      </div>
+        <div className="filter-section">
+          <Filtered filter={filter} setFilter={setFilter}></Filtered>
+        </div>
         <Catalogo products={visibleProducts}></Catalogo>
       </div>
     </div>

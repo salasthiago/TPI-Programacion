@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Filter.css";
 
 export const filterValues = {
   PRICE_DESC: "pricedesc",
@@ -9,14 +10,20 @@ export const filterValues = {
 
 export default function Filtered({ filter, setFilter }) {
   return (
-    <div>
-      <span>Ordenar por: </span>
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        <option value={filterValues.PRICE_DESC}>De mayor a menor precio</option>
-        <option value={filterValues.PRICE_ASC}>De menor a mayor precio</option>
-        <option value={filterValues.YEAR_ASC}>Año más reciente</option>
-        <option value={filterValues.YEAR_DESC}>Mas antiguo</option>
-      </select>
+    <div className="filter-container">
+      <div className="filter-content">
+        <span className="filter-label">Ordenar por:</span>
+        <select 
+          className="filter-select"
+          value={filter} 
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value={filterValues.PRICE_DESC}>De mayor a menor precio</option>
+          <option value={filterValues.PRICE_ASC}>De menor a mayor precio</option>
+          <option value={filterValues.YEAR_ASC}>Año más reciente</option>
+          <option value={filterValues.YEAR_DESC}>Más antiguo</option>
+        </select>
+      </div>
     </div>
   );
 }

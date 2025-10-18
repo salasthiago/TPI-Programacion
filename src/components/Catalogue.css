@@ -1,0 +1,68 @@
+/* Hero Section para el Catálogo */
+.catalogue-hero {
+  position: relative;
+  background: linear-gradient(135deg, #512da8, #7b1fa2, #9c27b0);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.catalogue-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+}
+
+.catalogue-hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contenedor principal del catálogo */
+.catalogue-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Grid de productos */
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .catalogue-hero {
+    padding: 3rem 1rem;
+  }
+  
+  .catalogue-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .catalogue-hero p {
+    font-size: 1rem;
+  }
+  
+  .catalogue-container {
+    padding: 0 1rem;
+  }
+  
+  .products-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-container {
+    grid-template-columns: 1fr;
+  }
+}

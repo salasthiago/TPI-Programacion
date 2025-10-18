@@ -7,12 +7,12 @@ const Header = () => {
   return (
     <div className="header-section">
       <div className="header-content">
-        <Link to="/">
+        <Link to="/home">
           <img src={purplecat} alt="Logo de la Marca Purple Cat" className="logo-simple" />
         </Link>
         <nav>
           <ul className="nav-menu">
-            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/home">Inicio</Link></li>
             <li><Link to="/contacto">Contacto</Link></li>
             <li><Link to="/cart">🛒 {totalItems}</Link></li>
           </ul>
