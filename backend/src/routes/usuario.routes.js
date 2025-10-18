@@ -1,18 +1,22 @@
-// backend/src/routes/usuario.routes.js
 import express from 'express';
-import Usuario from '../models/usuario.model.js';
 import {
   obtenerUsuarios,
   crearUsuario,
+  loginUsuario,
   actualizarUsuario,
   eliminarUsuario
 } from '../controllers/usuario.controller.js';
+import { verificarAuth, verificarSuperAdmin } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.get('/', obtenerUsuarios);
-router.post('/', crearUsuario);
-router.put('/:id', actualizarUsuario);
-router.delete('/:id', eliminarUsuario);
+// Rutas públicas
+router.post('/', crearUsuario); // Registro
+router.post('/login', loginUsuario); // Login
+
+// Rutas protegidas (solo SuperAdmin)
+router.get('/', verificarAuth, verificarSuperAdmin, obtenerUsuarios);
+router.put('/:id', verificarAuth, verificarSuperAdmin, actualizarUsuario);
+router.delete('/:id', verificarAuth, verificarSuperAdmin, eliminarUsuario);
 
 export default router;

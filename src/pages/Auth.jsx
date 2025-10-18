@@ -1,19 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
+import { useAuth } from "../context/AuthContext";
 
-function Auth({ onLogin }) {
+function Auth() {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [modo, setModo] = useState("login");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const endpoint = modo === "login" ? "login" : "usuarios";
+    // Endpoint y body según modo
+    const endpoint = modo === "login" ? "usuarios/login" : "usuarios";
     const metodo = "POST";
-
     const body =
       modo === "login"
         ? { correo, password }
@@ -26,25 +30,40 @@ function Auth({ onLogin }) {
         body: JSON.stringify(body),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("Respuesta del servidor no es JSON:\n" + text);
+      }
+
       if (res.ok) {
-        onLogin && onLogin(data); // setea usuario logueado si viene la prop
+        const usuario = data.usuario || data;
+
+        // Guardar en contexto
+        login(usuario);
+
+        // Guardar en localStorage
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+
+        // Redirigir
+        navigate("/home");
       } else {
-        alert(data.error || "Ocurrió un error");
+        alert(data.error || "Ocurrió un error en el servidor");
       }
     } catch (error) {
-      console.error(error);
-      alert("Error de conexión");
+      console.error("Error de conexión:", error);
+      alert("Error de conexión con el servidor");
     }
   };
 
   return (
     <div className={`container ${modo === "registro" ? "active" : ""}`} id="container">
+      {/* Formulario Registro */}
       <div className="form-container sign-up">
         <form onSubmit={handleSubmit}>
           <h1>Crear una Cuenta</h1>
-
-          {/* Siempre renderizamos los campos, solo los mostramos/ocultamos con CSS */}
           <div
             className={`fields registro-fields ${modo === "registro" ? "show" : "hide"}`}
             aria-hidden={modo !== "registro"}
@@ -55,48 +74,41 @@ function Auth({ onLogin }) {
               placeholder="Nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
+              required={modo === "registro"}
             />
-          </div>
-
-          <input
-            className="input-field"
-            type="email"
-            placeholder="Correo electrónico"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            required
-          />
-
-          <input
-            className="input-field"
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <div
-            className={`fields registro-fields ${modo === "registro" ? "show" : "hide"}`}
-            aria-hidden={modo !== "registro"}
-          >
+            <input
+              className="input-field"
+              type="email"
+              placeholder="Correo electrónico"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              required
+            />
+            <input
+              className="input-field"
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <input
               className="input-field"
               type="password"
               placeholder="Confirmar contraseña"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required={modo === "registro"}
             />
           </div>
-
           <button type="submit">{modo === "login" ? "Ingresar" : "Registrarse"}</button>
         </form>
       </div>
 
+      {/* Formulario Login */}
       <div className="form-container sign-in">
         <form onSubmit={handleSubmit}>
           <h1>Iniciar Sesión</h1>
-
           <div
             className={`fields login-fields ${modo === "login" ? "show" : "hide"}`}
             aria-hidden={modo !== "login"}
@@ -118,32 +130,24 @@ function Auth({ onLogin }) {
               required
             />
           </div>
-
           <button type="submit">Ingresar</button>
         </form>
       </div>
 
+      {/* Panel de toggle */}
       <div className="toggle-container">
         <div className="toggle">
           <div className="toggle-panel toggle-left">
             <h1>¡Hola otra vez!</h1>
             <p>Ingresá tus datos para acceder a la página.</p>
-            <button
-              type="button"
-              className="hidden"
-              onClick={() => setModo("login")}
-            >
+            <button type="button" className="hidden" onClick={() => setModo("login")}>
               Iniciar Sesión
             </button>
           </div>
           <div className="toggle-panel toggle-right">
-            <h1>Bienvenido!</h1>
+            <h1>¡Bienvenido!</h1>
             <p>¡Registrate para usar la mejor tienda online de vinilos!</p>
-            <button
-              type="button"
-              className="hidden"
-              onClick={() => setModo("registro")}
-            >
+            <button type="button" className="hidden" onClick={() => setModo("registro")}>
               Crear Cuenta
             </button>
           </div>
