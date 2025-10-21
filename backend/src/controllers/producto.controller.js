@@ -1,3 +1,5 @@
+// backend/src/controllers/producto.controller.js
+import path from 'path';
 import Producto from '../models/producto.model.js';
 
 // GET - Obtener todos los productos (público)
@@ -91,5 +93,44 @@ export const eliminarProducto = async (req, res) => {
   } catch (error) {
     console.error('Error eliminarProducto:', error);
     res.status(500).json({ error: error.message });
+  }
+};
+
+/* ============================
+   POST - Subir imagen (solo imagen)
+   Body: form-data → key: "imagen" (File)
+   Ruta guarda la imagen en /public/uploads/vinilos
+   y setea productos.image = "uploads/vinilos/archivo.ext"
+============================ */
+export const subirImagenProducto = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'Falta el archivo "imagen"' });
+    }
+
+    const producto = await Producto.findByPk(id);
+    if (!producto) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    // Ruta relativa POSIX para guardar en DB (compatible Win/Linux)
+    const relPath = path.posix.join('uploads/vinilos', req.file.filename);
+
+    await producto.update({
+      image: relPath,                 // se guarda sin "/public"
+      updatedAt: new Date()           // por si tu modelo lo usa
+    });
+
+    return res.json({
+      ok: true,
+      producto_id: Number(id),
+      image_path_db: relPath,         // lo que quedó en la DB
+      url_publica: `/${relPath}`      // usar directo en <img src="/uploads/..">
+    });
+  } catch (error) {
+    console.error('Error subirImagenProducto:', error);
+    res.status(500).json({ error: 'No se pudo guardar la imagen' });
   }
 };
