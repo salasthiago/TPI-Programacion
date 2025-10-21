@@ -4,9 +4,11 @@ import {
   obtenerProductoPorId,
   crearProducto,
   actualizarProducto,
-  eliminarProducto
+  eliminarProducto,
+  subirImagenProducto       // 👈 importamos la nueva función
 } from '../controllers/producto.controller.js';
 import { verificarAuth, verificarAdmin } from '../middlewares/auth.middleware.js';
+import { upload } from '../middlewares/upload.middleware.js'; // 👈 importamos multer
 
 const router = express.Router();
 
@@ -18,5 +20,14 @@ router.get('/:id', obtenerProductoPorId);
 router.post('/', verificarAuth, verificarAdmin, crearProducto);
 router.put('/:id', verificarAuth, verificarAdmin, actualizarProducto);
 router.delete('/:id', verificarAuth, verificarAdmin, eliminarProducto);
+
+// 📸 Subida de imagen (solo Admin o SuperAdmin)
+router.post(
+  '/:id/imagen',
+  verificarAuth,
+  verificarAdmin,
+  upload.single('imagen'),
+  subirImagenProducto
+);
 
 export default router;
