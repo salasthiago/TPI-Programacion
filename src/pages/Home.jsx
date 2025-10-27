@@ -15,11 +15,11 @@ const Home = () => {
       </div>
       <div className="section">
         <h2>Destacados del Mes</h2>
-        <ProductsLoop />
+        <ProductsLoop limit={3} offset={0} />
       </div>
       <div className="section">
         <h2>Productos en Descuento</h2>
-        <ProductsLoop />
+        <ProductsLoop limit={3} offset={3} />
       </div>
       <Footer />
     </>

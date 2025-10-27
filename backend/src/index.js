@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import sequelize from "./models/database.js";
+import { inicializarDatos } from "./seeders/init.js";
 
 import usuarioRoutes from "./routes/usuario.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
@@ -27,8 +28,11 @@ app.use("/api/productos", productoRoutes);
     await sequelize.authenticate();
     console.log("✅ Conexión a SQLite exitosa");
 
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: false });
     console.log("✅ Base de datos sincronizada correctamente");
+
+    // Inicializar datos de ejemplo si la BD está vacía
+    await inicializarDatos();
 
     app.listen(PORT, () =>
       console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`)

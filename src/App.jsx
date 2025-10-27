@@ -9,7 +9,8 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
-import Usuarios from './components/Usuarios';
+import AdminProductos from './pages/AdminProductos';
+import AdminUsuarios from './pages/AdminUsuarios';
 
 function App() {
   return (
@@ -37,21 +38,33 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path='/cart' 
+            <Route
+              path='/cart'
               element={
                 <ProtectedRoute>
                   <Cart />
                 </ProtectedRoute>
-              } 
+              }
             />
-            <Route 
-              path='/usuarios' 
+
+            {/* Rutas de administración - Solo Admin y SuperAdmin */}
+            <Route
+              path='/admin/productos'
               element={
-                <ProtectedRoute>
-                  <Usuarios />
+                <ProtectedRoute requiredRole="Admin">
+                  <AdminProductos />
                 </ProtectedRoute>
-              } 
+              }
+            />
+
+            {/* Rutas de SuperAdmin - Solo SuperAdmin */}
+            <Route
+              path='/admin/usuarios'
+              element={
+                <ProtectedRoute requiredRole="SuperAdmin">
+                  <AdminUsuarios />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </BrowserRouter>

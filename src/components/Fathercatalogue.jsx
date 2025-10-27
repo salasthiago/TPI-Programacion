@@ -6,82 +6,32 @@ import { filterValues } from "./Filter";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const products = [
-  {
-    id: 5,
-    name: "Plastic Beach",
-    artist: "Gorillaz",
-    price: 25.99,
-    year: 1300,
-  },
-  { id: 6, name: "Ballads 1", artist: "Joji", price: 28.99, year: 1999 },
-  {
-    id: 7,
-    name: "Thriller",
-    artist: "Michael Jackson",
-    price: 24.99,
-    year: 666,
-  },
-  { id: 8, name: "Demon Days", artist: "Gorillaz", price: 22.99, year: 991 },
-  { id: 9, name: "Mint Jams", artist: "Casiopea", price: 69.99, year: 1995 },
-  { id: 10, name: "Dirt", artist: "Alice In Chains", price: 22.99, year: 2000 },
-  {
-    id: 44,
-    name: "Oktubre",
-    artist: "Patricio rey y sus redonditos de ricota",
-    price: 22.99,
-    year: 2006,
-  },
-  {
-    id: 92,
-    name: "Gulp",
-    artist: "Patricio rey y sus redonditos de ricota",
-    price: 22.99,
-    year: 2003,
-  },
-  {
-    id: 54,
-    name: "Audioslave",
-    artist: "Audioslave",
-    price: 22.99,
-    year: 2069,
-  },
-  {
-    id: 423,
-    name: "Verde Paisaje del infierno",
-    artist: "Los piojos",
-    price: 22.99,
-    year: 22233,
-  },
-  {
-    id: 898,
-    name: "Cuarteto Característico (A2000)",
-    artist: "Rodrigo",
-    price: 22.99,
-    year: 1123,
-  },
-  {
-    id: 873,
-    name: "Master of puppets",
-    artist: "Metallica",
-    price: 23.99,
-    year: 2025,
-  },
-  {
-    id: 8766,
-    name: "Porfiado",
-    artist: "El Cuarteto de Nos",
-    price: 79.99,
-    year: 2015,
-  },
-];
-
 export default function Fathercatalogue() {
-  // aca iria llamada a la api
-  // conseguir productos etc
+  const [products, setProducts] = useState([])
   const [filter, setFilter] = useState(filterValues.PRICE_ASC);
   const [visibleProducts, setVisibleProducts] = useState(products);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/productos", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data);
+        } else {
+          console.error("Error al obtener productos");
+        }
+      } catch (error) {
+        console.error("Error en la petición:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Array vacío para ejecutar solo una vez al montar
   useEffect(() => {
     const arr = [...products];
 
@@ -108,7 +58,7 @@ export default function Fathercatalogue() {
     }
 
     setVisibleProducts(arr);
-  }, [filter]);
+  }, [filter, products]); // Agregar products como dependencia
   return (
     <div>
       <Header></Header>

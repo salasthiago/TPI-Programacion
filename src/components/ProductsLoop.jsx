@@ -1,17 +1,50 @@
+import { useState, useEffect } from "react"
 import Product from "./Product"
 
-const ProductsLoop = () => {
-  const products = [
-    { id: 1, name: "Abbey Road", artist: "The Beatles", price: "25.99" },
-    { id: 2, name: "Dark Side of the Moon", artist: "Pink Floyd", price: "28.99" },
-    { id: 3, name: "Thriller", artist: "Michael Jackson", price: "24.99" },
-    { id: 4, name: "Back in Black", artist: "AC/DC", price: "22.99" }
-  ]
+const ProductsLoop = ({ limit = 3, offset = 0 }) => {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/productos", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        })
+
+        if (res.ok) {
+          const data = await res.json()
+          // Aplicar offset y limit para mostrar productos específicos
+          setProducts(data.slice(offset, offset + limit))
+        } else {
+          console.error("Error al obtener productos")
+        }
+      } catch (error) {
+        console.error("Error en la petición:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [limit, offset])
+
+  if (loading) {
+    return <div className="products-container">Cargando productos...</div>
+  }
 
   return (
     <div className="products-container">
       {products.map(product => (
-        <Product key={product.id} id={product.id} name={product.name} artist={product.artist} price={product.price}></Product>
+        <Product
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          artist={product.artist}
+          price={product.price}
+          year={product.year}
+        />
       ))}
     </div>
   )
