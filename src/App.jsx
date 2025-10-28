@@ -7,6 +7,7 @@ import Catalogo from './components/Catalogue'
 import Fathercatalogue from './components/Fathercatalogue'
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { NotificationProvider } from "./components/Notification";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import AdminProductos from './pages/AdminProductos';
@@ -15,9 +16,10 @@ import AdminUsuarios from './pages/AdminUsuarios';
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
+      <NotificationProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
             <Route path='/' element={<Auth />} />
             <Route path='/contacto' element={<Contact />} />
 
@@ -69,6 +71,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </CartProvider>
+      </NotificationProvider>
     </AuthProvider>
   )
 }

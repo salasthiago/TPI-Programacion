@@ -6,6 +6,7 @@ import { inicializarDatos } from "./seeders/init.js";
 
 import usuarioRoutes from "./routes/usuario.routes.js";
 import productoRoutes from "./routes/producto.routes.js";
+import carritoRoutes from "./routes/carrito.routes.js";
 
 const app = express();
 const PORT = 3000;
@@ -21,6 +22,7 @@ app.use(express.static(path.resolve("public")));
 // ===== Rutas =====
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/productos", productoRoutes);
+app.use("/api/carrito", carritoRoutes);
 
 // ===== Conexión y sincronización con la base de datos =====
 (async () => {

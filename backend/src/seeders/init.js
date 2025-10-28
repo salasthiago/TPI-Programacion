@@ -1,5 +1,6 @@
 import Usuario from '../models/usuario.model.js';
 import Producto from '../models/producto.model.js';
+import Carrito from '../models/carrito.model.js';
 
 /**
  * Función para inicializar la base de datos con datos de ejemplo

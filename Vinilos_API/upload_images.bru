@@ -1,0 +1,24 @@
+meta {
+  name: upload_images
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/productos/1/imagen
+  body: multipartForm
+  auth: inherit
+}
+
+headers {
+  user-id: 2
+}
+
+body:multipart-form {
+  imagen: @file(C:\Users\Silvana\Downloads\foto de perfil thiago.jpg)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

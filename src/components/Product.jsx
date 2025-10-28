@@ -1,10 +1,23 @@
 import { useCart } from "../context/CartContext";
+import { useNotification } from "./Notification";
 
-export default function Product({ id, name, artist, price,year}) {
+export default function Product({ id, name, artist, price, year }) {
   const { addToCart } = useCart();
-  const handleAdd = () => {
-    addToCart({ id, name, artist, price });
+  const { showNotification } = useNotification();
+
+  const handleAdd = async () => {
+    const success = await addToCart({ id, name, artist, price });
+
+    if (success) {
+      showNotification({
+        title: "¡Agregado al carrito!",
+        message: `${name} - ${artist}`,
+        type: "success",
+        duration: 3000
+      });
+    }
   };
+
   return (
     <>
       <div className="product-card">
